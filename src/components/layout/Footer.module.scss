@@ -1,0 +1,130 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.footer {
+    background: $color-accent;
+    color: $color-white;
+    padding: $spacing-3xl 0 $spacing-lg;
+}
+
+.container {
+    @include container;
+}
+
+.grid {
+    display: grid;
+    gap: $spacing-xl;
+    grid-template-columns: 1fr;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    }
+}
+
+.brand {
+    .logo {
+        font-family: $font-heading;
+        font-size: $font-size-2xl;
+        font-weight: 700;
+        color: $color-secondary;
+        letter-spacing: 0.05em;
+    }
+
+    .tagline {
+        margin-top: $spacing-md;
+        font-size: $font-size-sm;
+        color: rgba($color-white, 0.7);
+        line-height: 1.6;
+    }
+
+    .social {
+        display: flex;
+        gap: $spacing-md;
+        margin-top: $spacing-lg;
+
+        a {
+            @include flex-center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba($color-white, 0.3);
+            border-radius: $border-radius-full;
+            transition: all $transition-fast;
+
+            &:hover {
+                background: $color-secondary;
+                border-color: $color-secondary;
+                color: $color-accent;
+            }
+        }
+    }
+}
+
+.links {
+    h4 {
+        font-family: $font-body;
+        font-size: $font-size-sm;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: $spacing-lg;
+        color: $color-secondary;
+    }
+
+    nav {
+        @include flex-column;
+        gap: $spacing-sm;
+
+        a {
+            font-size: $font-size-sm;
+            color: rgba($color-white, 0.8);
+            transition: color $transition-fast;
+
+            &:hover {
+                color: $color-white;
+            }
+        }
+    }
+}
+
+.contacts {
+    h4 {
+        font-family: $font-body;
+        font-size: $font-size-sm;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: $spacing-lg;
+        color: $color-secondary;
+    }
+
+    a,
+    p {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        font-size: $font-size-sm;
+        color: rgba($color-white, 0.8);
+        margin-bottom: $spacing-sm;
+        transition: color $transition-fast;
+    }
+
+    a:hover {
+        color: $color-white;
+    }
+}
+
+.bottom {
+    margin-top: $spacing-3xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid rgba($color-white, 0.1);
+    text-align: center;
+
+    p {
+        font-size: $font-size-sm;
+        color: rgba($color-white, 0.5);
+    }
+}

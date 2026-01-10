@@ -1,0 +1,242 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.categories {
+    padding: $spacing-lg;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+
+    h1 {
+        font-size: $font-size-2xl;
+    }
+}
+
+.addBtn {
+    @include button-primary;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+}
+
+.grid {
+    display: grid;
+    gap: $spacing-md;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: $spacing-lg;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-lg;
+    transition: all $transition-fast;
+
+    &:hover {
+        box-shadow: $shadow-md;
+    }
+}
+
+.cardContent {
+    h3 {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-xs;
+    }
+}
+
+.slug {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    font-family: monospace;
+    margin-bottom: $spacing-xs;
+}
+
+.desc {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.cardActions {
+    display: flex;
+    gap: $spacing-xs;
+
+    button {
+        @include flex-center;
+        width: 36px;
+        height: 36px;
+        background: $color-background-alt;
+        border: none;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover {
+            background: $color-primary;
+            color: $color-white;
+        }
+
+        &:last-child:hover {
+            background: $color-error;
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-modal;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: $color-white;
+    border-radius: $border-radius-xl;
+    padding: $spacing-xl;
+    z-index: $z-modal + 1;
+
+    h2 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-lg;
+    }
+}
+
+.field {
+    margin-bottom: $spacing-md;
+
+    label {
+        display: block;
+        font-size: $font-size-sm;
+        font-weight: 500;
+        margin-bottom: $spacing-xs;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: $spacing-sm;
+        border: 1px solid $color-border;
+        border-radius: $border-radius-md;
+        font-size: $font-size-base;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+    }
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+
+    button {
+        padding: $spacing-sm $spacing-lg;
+        border: none;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        font-weight: 500;
+
+        &:first-child {
+            background: $color-background-alt;
+        }
+    }
+}
+
+.saveBtn {
+    @include button-primary;
+}
+
+.loading {
+    @include flex-center;
+    min-height: 200px;
+    color: $color-text-muted;
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .header h1 {
+        color: #E0E0E0;
+    }
+
+    .card {
+        background: #1E1E1E;
+        border-color: #333;
+    }
+
+    .cardContent h3 {
+        color: #E0E0E0;
+    }
+
+    .slug {
+        color: $color-primary;
+    }
+
+    .desc {
+        color: #B0B0B0;
+    }
+
+    .cardActions button {
+        background: #2A2A2A;
+        color: #B0B0B0;
+
+        &:hover {
+            background: $color-primary;
+            color: $color-white;
+        }
+
+        &:last-child:hover {
+            background: $color-error;
+        }
+    }
+
+    .modal {
+        background: #1E1E1E;
+
+        h2 {
+            color: #E0E0E0;
+        }
+    }
+
+    .field {
+        label {
+            color: #E0E0E0;
+        }
+
+        input,
+        textarea {
+            background: #2A2A2A;
+            border-color: #404040;
+            color: #E0E0E0;
+
+            &::placeholder {
+                color: #808080;
+            }
+        }
+    }
+
+    .modalActions button:first-child {
+        background: #2A2A2A;
+        color: #E0E0E0;
+    }
+
+    .loading {
+        color: #808080;
+    }
+}

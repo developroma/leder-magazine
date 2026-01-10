@@ -1,0 +1,234 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.auth {
+    min-height: 80vh;
+    @include flex-center;
+    padding: $spacing-xl;
+    background: linear-gradient(135deg, $color-background 0%, $color-background-alt 100%);
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+}
+
+.card {
+    background: $color-white;
+    border-radius: $border-radius-xl;
+    box-shadow: $shadow-xl;
+    padding: $spacing-2xl;
+    animation: fadeInUp 0.5s ease;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+
+    h1 {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-xs;
+    }
+
+    p {
+        color: $color-text-muted;
+    }
+}
+
+.form {
+    @include flex-column;
+    gap: $spacing-md;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+
+    .field input {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+}
+
+.field {
+    @include flex-column;
+    gap: $spacing-xs;
+
+    label {
+        font-size: $font-size-sm;
+        font-weight: 500;
+    }
+
+    input {
+        padding: $spacing-md;
+        border: 2px solid $color-border;
+        border-radius: $border-radius-md;
+        font-size: $font-size-base;
+        transition: all $transition-fast;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+            box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+        }
+
+        &::placeholder {
+            color: $color-text-muted;
+        }
+    }
+}
+
+.adminToggle {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    cursor: pointer;
+    padding: $spacing-md;
+    background: linear-gradient(135deg, rgba($color-primary, 0.05) 0%, rgba($color-primary, 0.1) 100%);
+    border-radius: $border-radius-md;
+    border: 2px solid transparent;
+    transition: all $transition-fast;
+
+    &:hover {
+        border-color: $color-primary;
+    }
+
+    input {
+        display: none;
+
+        &:checked+.checkmark {
+            background: $color-primary;
+            border-color: $color-primary;
+
+            &::after {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    }
+
+    span:last-child {
+        font-size: $font-size-sm;
+        font-weight: 500;
+    }
+}
+
+.checkmark {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+
+    &::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 14px;
+        color: $color-white;
+        opacity: 0;
+        transition: all $transition-fast;
+    }
+}
+
+.submitBtn {
+    @include button-primary;
+    width: 100%;
+    padding: $spacing-md;
+    font-size: $font-size-base;
+    margin-top: $spacing-sm;
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+.footer {
+    text-align: center;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $color-border;
+
+    p {
+        color: $color-text-muted;
+        font-size: $font-size-sm;
+
+        a {
+            color: $color-primary;
+            font-weight: 600;
+            transition: color $transition-fast;
+
+            &:hover {
+                color: $color-primary-dark;
+            }
+        }
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .auth {
+        background: linear-gradient(135deg, #121212 0%, #1A1A1A 100%);
+    }
+
+    .card {
+        background: #1E1E1E;
+        border: 1px solid #333;
+    }
+
+    .header {
+        h1 {
+            color: #E0E0E0;
+        }
+
+        p {
+            color: #808080;
+        }
+    }
+
+    .field {
+        label {
+            color: #B0B0B0;
+        }
+
+        input {
+            background: #2A2A2A;
+            border-color: #404040;
+            color: #E0E0E0;
+
+            &::placeholder {
+                color: #808080;
+            }
+        }
+    }
+
+    .footer {
+        border-color: #333;
+
+        p {
+            color: #808080;
+        }
+    }
+}

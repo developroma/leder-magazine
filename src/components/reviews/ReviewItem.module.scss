@@ -1,0 +1,184 @@
+@import '@/styles/variables';
+
+.review {
+    padding: $spacing-lg;
+    border-bottom: 1px solid $color-border;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &.reply {
+        padding: $spacing-md;
+        margin-left: $spacing-xl;
+        background: $color-background-alt;
+        border-radius: $border-radius-md;
+        border-bottom: none;
+        margin-top: $spacing-sm;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-md;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-full;
+    background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: $font-size-sm;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: 600;
+    font-size: $font-size-base;
+}
+
+.date {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.comment {
+    margin: 0 0 $spacing-md;
+    line-height: 1.6;
+    color: $color-text;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+}
+
+.actionBtn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    background: none;
+    border: none;
+    color: $color-text-muted;
+    cursor: pointer;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    font-size: $font-size-sm;
+
+    &:hover {
+        background: $color-background-alt;
+        color: $color-primary;
+    }
+
+    &.liked {
+        color: $color-error;
+
+        svg {
+            fill: currentColor;
+        }
+    }
+}
+
+.deleteBtn {
+    background: none;
+    border: none;
+    color: $color-text-muted;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    margin-left: auto;
+
+    &:hover {
+        color: $color-error;
+        background: rgba($color-error, 0.1);
+    }
+}
+
+.replyForm {
+    margin-top: $spacing-md;
+    display: flex;
+    gap: $spacing-sm;
+
+    textarea {
+        flex: 1;
+        padding: $spacing-sm;
+        border: 1px solid $color-border;
+        border-radius: $border-radius-md;
+        font-family: inherit;
+        font-size: $font-size-sm;
+        resize: none;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+    }
+
+    button {
+        padding: $spacing-sm $spacing-md;
+        background: $color-primary;
+        color: $color-white;
+        border: none;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background $transition-fast;
+
+        &:hover {
+            background: darken($color-primary, 10%);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+}
+
+.replies {
+    margin-top: $spacing-md;
+}
+
+// Dark theme
+:global([data-theme="dark"]) {
+    .review {
+        border-color: #333;
+
+        &.reply {
+            background: #1E1E1E;
+        }
+    }
+
+    .comment {
+        color: #E0E0E0;
+    }
+
+    .actionBtn:hover {
+        background: #2A2A2A;
+    }
+
+    .replyForm textarea {
+        background: #1E1E1E;
+        border-color: #404040;
+        color: #E0E0E0;
+    }
+}

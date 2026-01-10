@@ -1,0 +1,228 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.cart,
+.empty {
+    padding: $spacing-xl 0 $spacing-3xl;
+    min-height: 60vh;
+}
+
+.container {
+    @include container;
+}
+
+.empty {
+    @include flex-center;
+
+    .container {
+        text-align: center;
+
+        h1 {
+            font-size: $font-size-3xl;
+            margin-bottom: $spacing-md;
+        }
+
+        p {
+            color: $color-text-muted;
+            margin-bottom: $spacing-xl;
+        }
+    }
+}
+
+.continueBtn {
+    @include button-primary;
+    padding: $spacing-md $spacing-2xl;
+}
+
+.cart {
+    h1 {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-xl;
+    }
+}
+
+.layout {
+    display: grid;
+    gap: $spacing-xl;
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: 1fr 360px;
+    }
+}
+
+.items {
+    @include flex-column;
+    gap: $spacing-md;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto auto auto;
+    gap: $spacing-md;
+    align-items: center;
+    padding: $spacing-md;
+    background: $color-white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-sm;
+
+    @media (max-width: $breakpoint-md) {
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto;
+
+        .quantity,
+        .subtotal,
+        .removeBtn {
+            grid-column: 2;
+        }
+    }
+}
+
+.image {
+    position: relative;
+    width: 100px;
+    height: 120px;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    background: $color-background-alt;
+
+    @media (max-width: $breakpoint-md) {
+        width: 80px;
+        height: 100px;
+        grid-row: span 2;
+    }
+}
+
+.details {
+    @include flex-column;
+    gap: $spacing-xs;
+}
+
+.title {
+    font-weight: 500;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: $color-primary;
+    }
+}
+
+.variant {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.price {
+    font-weight: 600;
+    color: $color-primary;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+
+    button {
+        @include flex-center;
+        width: 36px;
+        height: 36px;
+
+        &:hover:not(:disabled) {
+            background: $color-background-alt;
+        }
+
+        &:disabled {
+            opacity: 0.3;
+        }
+    }
+
+    span {
+        width: 36px;
+        text-align: center;
+        font-weight: 500;
+    }
+}
+
+.subtotal {
+    font-weight: 600;
+    font-size: $font-size-lg;
+    min-width: 100px;
+    text-align: right;
+}
+
+.removeBtn {
+    @include flex-center;
+    width: 44px;
+    height: 44px;
+    color: $color-text-muted;
+    border-radius: $border-radius-md;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: rgba($color-error, 0.1);
+        color: $color-error;
+    }
+}
+
+.summary {
+    position: sticky;
+    top: 90px;
+    padding: $spacing-xl;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    height: fit-content;
+
+    h3 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-lg;
+    }
+}
+
+.summaryRow {
+    @include flex-between;
+    margin-bottom: $spacing-sm;
+    color: $color-text-light;
+}
+
+.summaryTotal {
+    @include flex-between;
+    padding-top: $spacing-md;
+    margin: $spacing-md 0;
+    border-top: 1px solid $color-border;
+    font-size: $font-size-xl;
+    font-weight: 600;
+}
+
+.checkoutBtn {
+    @include button-primary;
+    width: 100%;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+}
+
+.clearBtn {
+    @include button-secondary;
+    width: 100%;
+    padding: $spacing-md;
+    color: $color-error;
+    border-color: $color-error;
+
+    &:hover {
+        background: $color-error;
+        color: $color-white;
+    }
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-xl;
+    color: $color-text-light;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: $color-primary;
+    }
+}

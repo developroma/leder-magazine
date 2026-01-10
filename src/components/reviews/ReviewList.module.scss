@@ -1,0 +1,66 @@
+@import '@/styles/variables';
+
+.reviewList {
+    margin-top: $spacing-2xl;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+
+    h3 {
+        font-size: $font-size-2xl;
+        margin: 0;
+    }
+}
+
+.summary {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+}
+
+.count {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.loginPrompt {
+    padding: $spacing-lg;
+    background: $color-background-alt;
+    border-radius: $border-radius-lg;
+    text-align: center;
+    color: $color-text-muted;
+    margin-bottom: $spacing-xl;
+}
+
+.loading,
+.empty {
+    padding: $spacing-xl;
+    text-align: center;
+    color: $color-text-muted;
+}
+
+.list {
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+}
+
+// Dark theme
+:global([data-theme="dark"]) {
+    .loginPrompt {
+        background: #2A2A2A;
+    }
+
+    .list {
+        background: #1E1E1E;
+        box-shadow: none;
+        border: 1px solid #333;
+    }
+}

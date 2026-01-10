@@ -1,0 +1,99 @@
+@import 'variables';
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: $font-body;
+    font-size: $font-size-base;
+    line-height: 1.6;
+    color: var(--text-primary, $color-text);
+    background-color: var(--bg-primary, $color-background);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-heading;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--text-primary, inherit);
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+// Dark theme global overrides
+[data-theme="dark"] {
+    body {
+        background-color: #121212;
+        color: #E0E0E0;
+    }
+
+    input,
+    textarea,
+    select {
+        background-color: #2A2A2A;
+        border-color: #404040;
+        color: #E0E0E0;
+
+        &::placeholder {
+            color: #808080;
+        }
+    }
+
+    // Cards and containers - exclude color dots which need their inline background
+    .card:not([class*="colorDot"]),
+    [class*="card"]:not([class*="colorDot"]),
+    [class*="Card"]:not([class*="colorDot"]):not([class*="Dot"]) {
+        background-color: #1E1E1E !important;
+        border-color: #333 !important;
+    }
+}

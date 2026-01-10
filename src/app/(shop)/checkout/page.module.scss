@@ -1,0 +1,354 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.checkout {
+    padding: $spacing-xl 0 $spacing-3xl;
+
+    h1 {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-xl;
+    }
+}
+
+.empty {
+    @include flex-center;
+    min-height: 60vh;
+    text-align: center;
+
+    h1 {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-md;
+    }
+
+    p {
+        color: $color-text-muted;
+    }
+}
+
+.container {
+    @include container;
+}
+
+.layout {
+    display: grid;
+    gap: $spacing-xl;
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: 1fr 400px;
+    }
+}
+
+.form {
+    @include flex-column;
+    gap: $spacing-xl;
+}
+
+.savedDataNotice {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    background: linear-gradient(135deg, rgba($color-primary, 0.08) 0%, rgba($color-primary, 0.12) 100%);
+    border: 1px solid rgba($color-primary, 0.2);
+    border-radius: $border-radius-lg;
+    color: $color-primary;
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    strong {
+        display: block;
+        margin-bottom: $spacing-xs;
+        color: darken($color-primary, 10%);
+    }
+
+    p {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        margin: 0;
+    }
+}
+
+.section {
+    padding: $spacing-xl;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+
+    h2 {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-md;
+        border-bottom: 1px solid $color-border;
+    }
+}
+
+.row {
+    display: grid;
+    gap: $spacing-md;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: $spacing-md;
+    }
+}
+
+.field {
+    @include flex-column;
+
+    label {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        margin-bottom: $spacing-xs;
+    }
+
+    input,
+    select {
+        @include input-base;
+    }
+
+    .error {
+        border-color: $color-error;
+    }
+}
+
+.errorText {
+    font-size: $font-size-xs;
+    color: $color-error;
+    margin-top: $spacing-xs;
+}
+
+.autocomplete {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-top: none;
+    border-radius: 0 0 $border-radius-md $border-radius-md;
+    box-shadow: $shadow-md;
+    z-index: $z-dropdown;
+
+    li {
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        transition: background $transition-fast;
+
+        &:hover {
+            background: $color-background-alt;
+        }
+    }
+}
+
+.paymentMethods {
+    @include flex-column;
+    gap: $spacing-sm;
+}
+
+.paymentOption {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:has(input:checked) {
+        border-color: $color-primary;
+        background: rgba($color-primary, 0.05);
+    }
+
+    input {
+        accent-color: $color-primary;
+    }
+
+    span {
+        font-weight: 500;
+    }
+}
+
+.summary {
+    position: sticky;
+    top: 90px;
+    padding: $spacing-xl;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    height: fit-content;
+
+    h3 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-lg;
+    }
+}
+
+.summaryItems {
+    @include flex-column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid $color-border;
+}
+
+.summaryItem {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: $spacing-md;
+    align-items: center;
+}
+
+.summaryImage {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    background: $color-background-alt;
+
+    .qty {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        @include flex-center;
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        font-weight: 600;
+        background: $color-primary;
+        color: $color-white;
+        border-radius: $border-radius-full;
+    }
+}
+
+.summaryInfo {
+    p {
+        font-size: $font-size-sm;
+        font-weight: 500;
+    }
+
+    span {
+        font-size: $font-size-xs;
+        color: $color-text-muted;
+    }
+}
+
+.summaryPrice {
+    font-weight: 600;
+}
+
+.summaryTotal {
+    @include flex-between;
+    font-size: $font-size-xl;
+    font-weight: 600;
+    margin-bottom: $spacing-lg;
+}
+
+.submitBtn {
+    @include button-primary;
+    width: 100%;
+    padding: $spacing-md;
+    font-size: $font-size-base;
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: wait;
+    }
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .checkout {
+        background: #121212;
+
+        h1 {
+            color: #E0E0E0;
+        }
+    }
+
+    .section,
+    .summary {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        h2,
+        h3 {
+            color: #E0E0E0;
+            border-color: #333;
+        }
+    }
+
+    .field {
+        label {
+            color: #B0B0B0;
+        }
+
+        input,
+        select {
+            background: #2A2A2A;
+            border-color: #404040;
+            color: #E0E0E0;
+
+            &::placeholder {
+                color: #808080;
+            }
+        }
+    }
+
+    .dropdown {
+        background: #2A2A2A;
+        border-color: #404040;
+
+        li {
+            color: #E0E0E0;
+
+            &:hover {
+                background: #3A3A3A;
+            }
+        }
+    }
+
+    .paymentOption {
+        background: #2A2A2A;
+        border-color: #404040;
+
+        span {
+            color: #E0E0E0;
+        }
+
+        &:has(input:checked) {
+            background: rgba($color-primary, 0.15);
+        }
+    }
+
+    .summaryInfo {
+        p {
+            color: #E0E0E0;
+        }
+
+        span {
+            color: #808080;
+        }
+    }
+
+    .summaryTotal {
+        color: #E0E0E0;
+    }
+
+    .summaryPrice {
+        color: #E0E0E0;
+    }
+}

@@ -1,0 +1,71 @@
+@import '@/styles/variables';
+
+.starRating {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: default;
+    color: #ddd;
+    transition: color 0.15s ease, transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        fill: currentColor;
+        stroke: currentColor;
+    }
+
+    &.filled {
+        color: #FFB800;
+    }
+
+    &.half {
+        color: #FFB800;
+        opacity: 0.5;
+    }
+
+    &.interactive {
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.15);
+        }
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+.value {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-text;
+}
+
+// Dark theme
+:global([data-theme="dark"]) {
+    .star {
+        color: #444;
+
+        &.filled {
+            color: #FFB800;
+        }
+    }
+
+    .value {
+        color: #E0E0E0;
+    }
+}

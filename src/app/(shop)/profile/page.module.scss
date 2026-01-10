@@ -1,0 +1,478 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.profile {
+    padding: $spacing-xl 0 $spacing-3xl;
+    min-height: 80vh;
+}
+
+.container {
+    @include container;
+    display: grid;
+    gap: $spacing-xl;
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: 280px 1fr;
+    }
+}
+
+.sidebar {
+    background: $color-white;
+    border-radius: $border-radius-xl;
+    padding: $spacing-xl;
+    text-align: center;
+    box-shadow: $shadow-md;
+    height: fit-content;
+
+    h2 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-xs;
+    }
+}
+
+.avatar {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto $spacing-md;
+}
+
+.avatarImage {
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius-full;
+    background: $color-background-alt;
+    @include flex-center;
+    overflow: hidden;
+    color: $color-text-muted;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.avatarBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background: $color-primary;
+    color: $color-white;
+    border: 3px solid $color-white;
+    border-radius: $border-radius-full;
+    cursor: pointer;
+    transition: transform $transition-fast;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.email {
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-sm;
+}
+
+.adminBadge {
+    display: inline-block;
+    padding: $spacing-xs $spacing-sm;
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+    color: $color-white;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    border-radius: $border-radius-full;
+    margin-bottom: $spacing-lg;
+}
+
+.tabs {
+    @include flex-column;
+    gap: $spacing-xs;
+    margin: $spacing-lg 0;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $color-border;
+
+    button {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        width: 100%;
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $color-text-light;
+        background: transparent;
+        border: none;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover {
+            background: $color-background-alt;
+            color: $color-text;
+        }
+
+        &.active {
+            background: $color-primary;
+            color: $color-white;
+        }
+    }
+}
+
+.logoutBtn {
+    width: 100%;
+    padding: $spacing-sm;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-error;
+    background: rgba($color-error, 0.1);
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: $color-error;
+        color: $color-white;
+    }
+}
+
+.content {
+    background: $color-white;
+    border-radius: $border-radius-xl;
+    padding: $spacing-xl;
+    box-shadow: $shadow-md;
+}
+
+.section {
+    h3 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-md;
+        border-bottom: 1px solid $color-border;
+    }
+}
+
+.formGrid {
+    display: grid;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.field {
+    @include flex-column;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-md;
+
+    label {
+        font-size: $font-size-sm;
+        font-weight: 500;
+    }
+
+    input {
+        padding: $spacing-md;
+        border: 2px solid $color-border;
+        border-radius: $border-radius-md;
+        font-size: $font-size-base;
+        transition: all $transition-fast;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+
+        &:disabled {
+            background: $color-background-alt;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.saveBtn {
+    @include button-primary;
+    padding: $spacing-sm $spacing-xl;
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+.autocomplete {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: $z-dropdown;
+    box-shadow: $shadow-md;
+    margin-top: $spacing-xs;
+
+    li {
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        transition: background $transition-fast;
+
+        &:hover {
+            background: $color-background-alt;
+        }
+    }
+}
+
+.field select {
+    padding: $spacing-md;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    width: 100%;
+    background: $color-white;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+    }
+
+    &:disabled {
+        background: $color-background-alt;
+        cursor: not-allowed;
+    }
+}
+
+.savedInfo {
+    margin: $spacing-md 0;
+    padding: $spacing-md;
+    background: rgba($color-primary, 0.1);
+    border-radius: $border-radius-md;
+    border: 1px solid rgba($color-primary, 0.2);
+
+    p {
+        font-size: $font-size-sm;
+        margin: $spacing-xs 0;
+        color: $color-text;
+    }
+}
+
+.empty {
+    @include flex-center;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-3xl;
+    color: $color-text-muted;
+}
+
+.ordersList {
+    @include flex-column;
+    gap: $spacing-md;
+}
+
+.orderCard {
+    border: 1px solid $color-border;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md;
+    background: $color-background-alt;
+}
+
+.orderNumber {
+    font-weight: 600;
+}
+
+.status {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    border-radius: $border-radius-full;
+
+    &.new {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    &.received {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    &.shipped {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    &.delivered {
+        background: #d1fae5;
+        color: #047857;
+    }
+}
+
+.orderItems {
+    padding: $spacing-md;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-xs 0;
+    font-size: $font-size-sm;
+}
+
+.orderFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md;
+    border-top: 1px solid $color-border;
+    font-size: $font-size-sm;
+
+    strong {
+        font-size: $font-size-base;
+        color: $color-primary;
+    }
+}
+
+.loading {
+    @include flex-center;
+    min-height: 50vh;
+    font-size: $font-size-lg;
+    color: $color-text-muted;
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .profile {
+        background: #121212;
+    }
+
+    .sidebar,
+    .content {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        h2,
+        h3 {
+            color: #E0E0E0;
+            border-color: #333;
+        }
+    }
+
+    .email {
+        color: #808080;
+    }
+
+    .tabs {
+        border-color: #333;
+
+        button {
+            color: #B0B0B0;
+
+            &:hover {
+                background: #2A2A2A;
+                color: #E0E0E0;
+            }
+
+            &.active {
+                background: $color-primary;
+                color: $color-white;
+            }
+        }
+    }
+
+    .field {
+        label {
+            color: #B0B0B0;
+        }
+
+        input {
+            background: #2A2A2A;
+            border-color: #404040;
+            color: #E0E0E0;
+
+            &::placeholder {
+                color: #808080;
+            }
+
+            &:disabled {
+                background: #1A1A1A;
+            }
+        }
+    }
+
+    .orderCard {
+        border-color: #333;
+    }
+
+    .orderHeader {
+        background: #2A2A2A;
+    }
+
+    .orderNumber {
+        color: #E0E0E0;
+    }
+
+    .orderItems {
+        background: #1E1E1E;
+    }
+
+    .orderItem {
+        color: #B0B0B0;
+    }
+
+    .orderFooter {
+        background: #1E1E1E;
+        border-color: #333;
+        color: #E0E0E0;
+    }
+
+    .dropdown {
+        background: #2A2A2A;
+        border-color: #404040;
+
+        li {
+            color: #E0E0E0;
+
+            &:hover {
+                background: #3A3A3A;
+            }
+        }
+    }
+
+    .field select {
+        background: #1E1E1E;
+        border-color: #404040;
+        color: #E0E0E0;
+
+        &:disabled {
+            background: #2A2A2A;
+        }
+    }
+
+    .savedInfo {
+        background: rgba($color-primary, 0.15);
+        border-color: rgba($color-primary, 0.3);
+
+        p {
+            color: #E0E0E0;
+        }
+    }
+}

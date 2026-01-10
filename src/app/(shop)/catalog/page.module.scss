@@ -1,0 +1,807 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.catalog {
+    padding: $spacing-lg 0 $spacing-3xl;
+    min-height: 80vh;
+}
+
+.container {
+    @include container;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    animation: fadeInDown 0.6s ease;
+}
+
+.title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: $spacing-sm;
+
+    span {
+        display: inline-block;
+    }
+}
+
+.titleAccent {
+    color: $color-primary;
+    margin-left: $spacing-sm;
+}
+
+.subtitle {
+    color: $color-text-muted;
+    font-size: $font-size-lg;
+}
+
+.searchBar {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto $spacing-xl;
+    animation: fadeInUp 0.6s ease 0.1s both;
+
+    input {
+        width: 100%;
+        padding: $spacing-md $spacing-xl $spacing-md 3rem;
+        font-size: $font-size-base;
+        border: 2px solid $color-border;
+        border-radius: $border-radius-full;
+        background: $color-white;
+        transition: all $transition-base;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+            box-shadow: 0 0 0 4px rgba($color-primary, 0.1);
+        }
+
+        &::placeholder {
+            color: $color-text-muted;
+        }
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    left: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-text-muted;
+    pointer-events: none;
+}
+
+.clearSearch {
+    position: absolute;
+    right: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    @include flex-center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: $color-background-alt;
+    border-radius: $border-radius-full;
+    cursor: pointer;
+    color: $color-text-muted;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: $color-primary;
+        color: $color-white;
+    }
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    padding: $spacing-md;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+    animation: fadeInUp 0.6s ease 0.2s both;
+    position: relative;
+    z-index: 100;
+
+    @include responsive($breakpoint-md) {
+        padding: $spacing-sm $spacing-lg;
+    }
+}
+
+.filterToggle {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-text;
+    background: $color-background-alt;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: $color-primary;
+        color: $color-white;
+    }
+
+    &.hasFilters {
+        background: $color-primary;
+        color: $color-white;
+    }
+
+    @include responsive($breakpoint-lg) {
+        display: none;
+    }
+}
+
+.filterBadge {
+    @include flex-center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 11px;
+    background: $color-white;
+    color: $color-primary;
+    border-radius: $border-radius-full;
+}
+
+.sortWrapper {
+    position: relative;
+    margin-left: auto;
+    z-index: $z-dropdown + 10;
+}
+
+.sortBtn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-text;
+    background: $color-white;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+    white-space: nowrap;
+
+    &:hover {
+        border-color: $color-primary;
+    }
+}
+
+.sortIcon {
+    transition: transform $transition-fast;
+
+    &.open {
+        transform: rotate(180deg);
+    }
+}
+
+.sortOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: $z-dropdown + 5;
+}
+
+.sortDropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 180px;
+    background: $color-white;
+    border-radius: $border-radius-md;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-lg;
+    overflow: hidden;
+    z-index: $z-dropdown + 10;
+
+    li {
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover {
+            background: $color-background-alt;
+        }
+
+        &.active {
+            background: $color-primary;
+            color: $color-white;
+            font-weight: 600;
+        }
+    }
+}
+
+.results {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+
+    strong {
+        color: $color-primary;
+        font-weight: 700;
+    }
+}
+
+.layout {
+    display: grid;
+    gap: $spacing-xl;
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: 280px 1fr;
+    }
+}
+
+.sidebar {
+    display: none;
+
+    @include responsive($breakpoint-lg) {
+        display: block;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        padding: $spacing-lg;
+        background: $color-white;
+        border-radius: $border-radius-lg;
+        box-shadow: $shadow-sm;
+        animation: fadeInLeft 0.6s ease 0.3s both;
+    }
+
+    &.open {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 320px;
+        max-width: 90vw;
+        padding: $spacing-lg;
+        background: $color-white;
+        overflow-y: auto;
+        z-index: $z-modal;
+        animation: slideInLeft 0.3s ease;
+
+        @include responsive($breakpoint-lg) {
+            position: sticky;
+            animation: none;
+        }
+    }
+}
+
+.sidebarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $color-border;
+
+    h3 {
+        font-size: $font-size-lg;
+    }
+
+    button {
+        @include flex-center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: $color-background-alt;
+        border-radius: $border-radius-full;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover {
+            background: $color-primary;
+            color: $color-white;
+        }
+
+        @include responsive($breakpoint-lg) {
+            display: none;
+        }
+    }
+}
+
+.filterGroup {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid $color-border;
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+
+    h4 {
+        font-family: $font-body;
+        font-size: $font-size-sm;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $color-text-muted;
+        margin-bottom: $spacing-md;
+    }
+}
+
+.checkboxList {
+    @include flex-column;
+    gap: $spacing-sm;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-xs 0;
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: $color-primary;
+    }
+
+    input {
+        display: none;
+
+        &:checked+.checkboxCustom {
+            background: $color-primary;
+            border-color: $color-primary;
+
+            &::after {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    }
+
+    span:last-child {
+        font-size: $font-size-sm;
+    }
+}
+
+.checkboxCustom {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+
+    &::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 12px;
+        color: $color-white;
+        opacity: 0;
+        transition: all $transition-fast;
+    }
+}
+
+.colorFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+}
+
+.colorBtn {
+    width: 36px;
+    height: 36px;
+    border: 3px solid transparent;
+    border-radius: $border-radius-full;
+    cursor: pointer;
+    transition: all $transition-fast;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &.active {
+        border-color: $color-primary;
+        transform: scale(1.1);
+        box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $color-primary;
+    }
+}
+
+.priceInputs {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    input {
+        flex: 1;
+        min-width: 0;
+        max-width: 80px;
+        padding: $spacing-sm;
+        font-size: $font-size-sm;
+        border: 2px solid $color-border;
+        border-radius: $border-radius-md;
+        text-align: center;
+        transition: border-color $transition-fast;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+    }
+}
+
+.priceDash {
+    color: $color-text-muted;
+}
+
+.clearBtn {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-error;
+    background: rgba($color-error, 0.1);
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: $color-error;
+        color: $color-white;
+    }
+}
+
+.main {
+    min-height: 400px;
+}
+
+.grid {
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: repeat(2, 1fr);
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include responsive($breakpoint-xl) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.productWrapper {
+    animation: fadeInUp 0.5s ease both;
+}
+
+.skeleton {
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonImage {
+    aspect-ratio: 3/4;
+    background: linear-gradient(90deg, $color-background-alt 25%, lighten($color-background-alt, 5%) 50%, $color-background-alt 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeletonText {
+    height: 20px;
+    margin: $spacing-md;
+    background: $color-background-alt;
+    border-radius: $border-radius-sm;
+}
+
+.skeletonPrice {
+    height: 16px;
+    width: 60%;
+    margin: 0 $spacing-md $spacing-md;
+    background: $color-background-alt;
+    border-radius: $border-radius-sm;
+}
+
+.empty {
+    @include flex-center;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-3xl;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.emptyIcon {
+    font-size: 4rem;
+    animation: bounce 2s infinite;
+}
+
+.emptyBtn {
+    @include button-primary;
+    margin-top: $spacing-md;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-modal - 1;
+    animation: fadeIn 0.3s ease;
+
+    @include responsive($breakpoint-lg) {
+        display: none;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-2xl;
+    flex-wrap: wrap;
+}
+
+.pageBtn {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 $spacing-sm;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    font-size: $font-size-base;
+    font-weight: 500;
+    transition: all $transition-fast;
+
+    &:hover:not(:disabled) {
+        border-color: $color-primary;
+        color: $color-primary;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    &.active {
+        background: $color-primary;
+        border-color: $color-primary;
+        color: $color-white;
+    }
+}
+
+.pageDots {
+    padding: 0 $spacing-xs;
+    color: $color-text-muted;
+}
+
+.pageInfo {
+    margin-left: $spacing-md;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.loading {
+    @include flex-center;
+    min-height: 50vh;
+    font-size: $font-size-lg;
+    color: $color-text-muted;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .catalog {
+        background-color: #121212;
+    }
+
+    .title,
+    .subtitle {
+        color: #E0E0E0;
+    }
+
+    .filterGroup h4,
+    .sidebarHeader h3 {
+        color: #E0E0E0;
+    }
+
+    .toolbar {
+        background: #1E1E1E;
+        border: 1px solid #333;
+    }
+
+    .searchBar input {
+        background: #2A2A2A;
+        border-color: #404040;
+        color: #E0E0E0;
+
+        &::placeholder {
+            color: #808080;
+        }
+
+        &:focus {
+            border-color: $color-primary;
+        }
+    }
+
+    .sidebar {
+        background: #1E1E1E;
+        border-color: #333;
+    }
+
+    .filterToggle,
+    .sortBtn {
+        background: #2A2A2A;
+        color: #E0E0E0;
+        border-color: #404040;
+
+        &:hover {
+            background: #3A3A3A;
+        }
+    }
+
+    .sortDropdown {
+        background: #2A2A2A;
+        border-color: #404040;
+
+        li {
+            color: #E0E0E0;
+
+            &:hover {
+                background: #3A3A3A;
+            }
+
+            &.active {
+                background: rgba($color-primary, 0.2);
+            }
+        }
+    }
+
+    .checkboxLabel {
+        color: #E0E0E0;
+    }
+
+    .priceInputs input {
+        background: #2A2A2A;
+        border-color: #404040;
+        color: #E0E0E0;
+    }
+
+    .results {
+        color: #B0B0B0;
+    }
+
+    .empty {
+
+        h3,
+        p {
+            color: #E0E0E0;
+        }
+    }
+
+    .clearBtn,
+    .emptyBtn {
+        background: #2A2A2A;
+        color: #E0E0E0;
+        border-color: #404040;
+
+        &:hover {
+            background: #3A3A3A;
+        }
+    }
+
+    .skeleton {
+        background: #1E1E1E;
+    }
+
+    .skeletonImage {
+        background: linear-gradient(90deg, #2A2A2A 25%, #3A3A3A 50%, #2A2A2A 75%);
+        background-size: 200% 100%;
+    }
+
+    .skeletonText,
+    .skeletonPrice {
+        background: #2A2A2A;
+    }
+
+    .pagination {
+        .pageBtn {
+            background: #2A2A2A;
+            border-color: #404040;
+            color: #E0E0E0;
+
+            &:hover:not(:disabled) {
+                background: #3A3A3A;
+                border-color: $color-primary;
+            }
+
+            &.active {
+                background: $color-primary;
+                border-color: $color-primary;
+            }
+        }
+    }
+}

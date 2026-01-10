@@ -1,0 +1,508 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.container {
+    @include container;
+}
+
+// Scroll animation base
+.animateSection {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    @include flex-center;
+    color: $color-white;
+}
+
+.heroBackground {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+.heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.6) 100%);
+}
+
+.heroContent {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 $spacing-lg;
+
+    h1 {
+        font-size: clamp(2rem, 6vw, 4rem);
+        margin-bottom: $spacing-md;
+        animation: fadeInUp 0.8s ease forwards;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        opacity: 0.9;
+        margin-bottom: $spacing-xl;
+        animation: fadeInUp 0.8s ease 0.2s forwards;
+        opacity: 0;
+    }
+}
+
+.heroBtn {
+    @include button-base;
+    display: inline-flex;
+    background: $color-white;
+    color: $color-accent;
+    padding: $spacing-md $spacing-2xl;
+    font-size: $font-size-base;
+    animation: fadeInUp 0.8s ease 0.4s forwards;
+    opacity: 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+        background: $color-secondary;
+        color: $color-accent;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.scrollIndicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    span {
+        display: block;
+        width: 30px;
+        height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: $color-white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: scrollBounce 2s infinite;
+        }
+    }
+}
+
+@keyframes scrollBounce {
+
+    0%,
+    100% {
+        top: 8px;
+        opacity: 1;
+    }
+
+    50% {
+        top: 25px;
+        opacity: 0.3;
+    }
+}
+
+// Benefits section
+.benefits {
+    padding: $spacing-2xl 0;
+    background: $color-white;
+}
+
+.benefitsGrid {
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: repeat(2, 1fr);
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.benefitCard {
+    text-align: center;
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    background: $color-background-alt;
+    transition: all 0.4s ease;
+
+    .visible & {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    svg {
+        color: $color-primary;
+        margin-bottom: $spacing-md;
+    }
+
+    h3 {
+        font-size: $font-size-base;
+        margin-bottom: $spacing-xs;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        color: $color-text-muted;
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-lg;
+    }
+}
+
+.sectionTitle {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+}
+
+.categories {
+    padding: $spacing-3xl 0;
+}
+
+.categoryGrid {
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: repeat(2, 1fr);
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.categoryCard {
+    position: relative;
+    @include aspect-ratio(3, 4);
+    border-radius: $border-radius-xl;
+    overflow: hidden;
+    box-shadow: $shadow-md;
+
+    .visible & {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    img {
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover img {
+        transform: scale(1.1);
+    }
+}
+
+.categoryOverlay {
+    position: absolute;
+    inset: 0;
+    @include flex-center;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+    transition: background $transition-base;
+
+    span {
+        position: absolute;
+        bottom: $spacing-lg;
+        font-family: $font-heading;
+        font-size: $font-size-lg;
+        color: $color-white;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    &:hover {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+    }
+}
+
+// Parallax section
+.parallax {
+    position: relative;
+    padding: $spacing-3xl 0;
+    min-height: 500px;
+    @include flex-center;
+    color: $color-white;
+    overflow: hidden;
+}
+
+.parallaxBg {
+    position: absolute;
+    inset: -20%;
+    z-index: -1;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
+
+.parallaxContent {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 $spacing-lg;
+
+    h2 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: $spacing-md;
+    }
+
+    >p {
+        font-size: $font-size-lg;
+        opacity: 0.9;
+        margin-bottom: $spacing-2xl;
+    }
+}
+
+.statsRow {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-2xl;
+    flex-wrap: wrap;
+}
+
+.stat {
+    text-align: center;
+
+    span {
+        display: block;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        color: $color-secondary;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        opacity: 0.8;
+    }
+}
+
+.about {
+    padding: $spacing-3xl 0;
+    background: $color-background-alt;
+}
+
+.aboutGrid {
+    display: grid;
+    gap: $spacing-2xl;
+    align-items: center;
+
+    @include responsive($breakpoint-lg) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.aboutImage {
+    position: relative;
+    @include aspect-ratio(4, 3);
+    border-radius: $border-radius-xl;
+    overflow: hidden;
+    box-shadow: $shadow-xl;
+}
+
+.aboutContent {
+    h2 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin-bottom: $spacing-lg;
+    }
+
+    p {
+        color: $color-text-light;
+        margin-bottom: $spacing-md;
+        line-height: 1.8;
+    }
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+    margin: $spacing-xl 0;
+
+    li {
+        position: relative;
+        padding-left: $spacing-lg;
+        font-weight: 500;
+
+        &::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: $color-primary;
+        }
+    }
+}
+
+.aboutBtn {
+    @include button-secondary;
+}
+
+// Reviews section
+.reviews {
+    padding: $spacing-3xl 0;
+    background: $color-white;
+}
+
+.reviewsGrid {
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: 1fr;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.reviewCard {
+    padding: $spacing-xl;
+    background: $color-background-alt;
+    border-radius: $border-radius-lg;
+    text-align: center;
+
+    .visible & {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    p {
+        font-style: italic;
+        color: $color-text-light;
+        line-height: 1.7;
+        margin: $spacing-md 0;
+    }
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    color: #f59e0b;
+}
+
+.reviewer {
+    font-weight: 600;
+    color: $color-text;
+}
+
+.cta {
+    padding: $spacing-3xl 0;
+    background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 15%) 100%);
+    color: $color-white;
+}
+
+.ctaContent {
+    text-align: center;
+
+    h2 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin-bottom: $spacing-md;
+    }
+
+    p {
+        font-size: $font-size-lg;
+        opacity: 0.9;
+        margin-bottom: $spacing-xl;
+    }
+}
+
+.ctaBtn {
+    @include button-base;
+    background: $color-white;
+    color: $color-primary;
+    padding: $spacing-md $spacing-2xl;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+        background: $color-secondary;
+        color: $color-accent;
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .benefits {
+        background: #121212;
+    }
+
+    .benefitCard {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        h3 {
+            color: #E0E0E0;
+        }
+
+        p {
+            color: #808080;
+        }
+    }
+
+    .about {
+        background: #1A1A1A;
+    }
+
+    .aboutContent {
+        h2 {
+            color: #E0E0E0;
+        }
+
+        p {
+            color: #B0B0B0;
+        }
+    }
+
+    .features li {
+        color: #E0E0E0;
+    }
+
+    .reviews {
+        background: #121212;
+    }
+
+    .sectionTitle {
+        color: #E0E0E0;
+    }
+
+    .reviewCard {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        p {
+            color: #B0B0B0;
+        }
+    }
+
+    .reviewer {
+        color: #E0E0E0;
+    }
+}

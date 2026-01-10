@@ -1,0 +1,67 @@
+$color-primary: #8B4513;
+$color-primary-light: #A0522D;
+$color-primary-dark: #6B3410;
+$color-secondary: #D4A574;
+$color-secondary-light: #E8C9A8;
+$color-accent: #1A1A1A;
+$color-background: #FDF8F5;
+$color-background-alt: #F5EDE6;
+$color-text: #2C2C2C;
+$color-text-light: #666666;
+$color-text-muted: #999999;
+$color-white: #FFFFFF;
+$color-border: #E5E5E5;
+$color-success: #2E7D32;
+$color-error: #C62828;
+$color-warning: #F9A825;
+
+$font-heading: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
+$font-body: var(--font-body), 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 2rem;
+$font-size-4xl: 2.5rem;
+$font-size-5xl: 3rem;
+
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-2xl: 3rem;
+$spacing-3xl: 4rem;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+$shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.15);
+
+$transition-fast: 150ms ease;
+$transition-base: 300ms ease;
+$transition-slow: 500ms ease;
+
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$container-xl: 1280px;
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-modal: 300;
+$z-toast: 400;

@@ -1,0 +1,222 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.info {
+    padding: $spacing-xl 0 $spacing-3xl;
+    min-height: 60vh;
+
+    h1 {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-xl;
+        text-align: center;
+    }
+}
+
+.container {
+    @include container;
+    max-width: 800px;
+}
+
+.section {
+    margin-bottom: $spacing-2xl;
+
+    h2 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-md;
+        color: $color-primary;
+    }
+
+    p {
+        line-height: 1.8;
+        color: $color-text-light;
+        margin-bottom: $spacing-md;
+    }
+
+    ul,
+    ol {
+        padding-left: $spacing-lg;
+        margin-bottom: $spacing-md;
+
+        li {
+            margin-bottom: $spacing-sm;
+            line-height: 1.6;
+            color: $color-text-light;
+        }
+    }
+
+    ol li {
+        list-style: decimal;
+    }
+
+    ul li {
+        list-style: disc;
+    }
+}
+
+.values {
+    display: grid;
+    gap: $spacing-lg;
+    padding-left: 0;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    li {
+        list-style: none !important;
+        padding: $spacing-lg;
+        background: $color-background-alt;
+        border-radius: $border-radius-md;
+
+        strong {
+            display: block;
+            font-size: $font-size-lg;
+            margin-bottom: $spacing-sm;
+            color: $color-text;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+.card {
+    padding: $spacing-lg;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+    margin-bottom: $spacing-md;
+
+    h3 {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-sm;
+    }
+
+    p {
+        margin-bottom: $spacing-sm;
+    }
+}
+
+.paymentOptions {
+    display: grid;
+    gap: $spacing-md;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.contactsGrid {
+    display: grid;
+    gap: $spacing-lg;
+
+    @include responsive($breakpoint-md) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.contactCard {
+    text-align: center;
+    padding: $spacing-xl;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+
+    h3 {
+        font-size: $font-size-base;
+        color: $color-text-muted;
+        margin-bottom: $spacing-sm;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    a {
+        display: block;
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $color-primary;
+        margin-bottom: $spacing-sm;
+        transition: color $transition-fast;
+
+        &:hover {
+            color: $color-primary-dark;
+        }
+    }
+
+    p {
+        font-size: $font-size-sm;
+        color: $color-text-muted;
+        margin: 0;
+    }
+}
+
+.steps {
+    padding: $spacing-lg;
+    background: $color-background-alt;
+    border-radius: $border-radius-md;
+    margin-top: $spacing-lg;
+
+    h3 {
+        font-size: $font-size-base;
+        margin-bottom: $spacing-md;
+    }
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .info {
+        background: #121212;
+
+        h1 {
+            color: #E0E0E0;
+        }
+    }
+
+    .section {
+        h2 {
+            color: $color-primary;
+        }
+
+        p,
+        li {
+            color: #B0B0B0;
+        }
+    }
+
+    .values li {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        strong {
+            color: #E0E0E0;
+        }
+
+        p {
+            color: #B0B0B0;
+        }
+    }
+
+    .card,
+    .contactCard {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        h3 {
+            color: #E0E0E0;
+        }
+
+        p {
+            color: #B0B0B0;
+        }
+    }
+
+    .steps {
+        background: #1E1E1E;
+        border: 1px solid #333;
+
+        h3 {
+            color: #E0E0E0;
+        }
+    }
+}

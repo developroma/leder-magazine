@@ -1,0 +1,223 @@
+@import 'variables';
+@import 'mixins';
+@import 'reset';
+@import 'animations';
+
+// Dark Theme Variables
+:root {
+    --bg-primary: #FDF8F5;
+    --bg-secondary: #F5EDE6;
+    --text-primary: #2C2C2C;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --border-color: #E5E5E5;
+    --card-bg: #FFFFFF;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1A1A1A;
+    --bg-secondary: #2C2C2C;
+    --text-primary: #F5F5F5;
+    --text-secondary: #B0B0B0;
+    --text-muted: #808080;
+    --border-color: #404040;
+    --card-bg: #252525;
+
+    body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+    }
+
+    .modal,
+    .card {
+        background: var(--card-bg);
+    }
+}
+
+.container {
+    @include container;
+}
+
+.btn {
+    @include button-base;
+
+    &--primary {
+        @include button-primary;
+    }
+
+    &--secondary {
+        @include button-secondary;
+    }
+
+    &--large {
+        padding: $spacing-md $spacing-2xl;
+        font-size: $font-size-lg;
+    }
+
+    &--small {
+        padding: $spacing-xs $spacing-md;
+        font-size: $font-size-sm;
+    }
+
+    &--icon {
+        padding: $spacing-sm;
+        border-radius: $border-radius-full;
+    }
+}
+
+.input {
+    @include input-base;
+
+    &--error {
+        border-color: $color-error;
+    }
+}
+
+.label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-text;
+}
+
+.error-text {
+    margin-top: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $color-error;
+}
+
+.section {
+    padding: $spacing-3xl 0;
+
+    &--alt {
+        background: $color-background-alt;
+    }
+}
+
+.heading {
+    &--1 {
+        font-size: $font-size-4xl;
+
+        @include responsive($breakpoint-lg) {
+            font-size: $font-size-5xl;
+        }
+    }
+
+    &--2 {
+        font-size: $font-size-3xl;
+    }
+
+    &--3 {
+        font-size: $font-size-2xl;
+    }
+
+    &--4 {
+        font-size: $font-size-xl;
+    }
+}
+
+.text {
+    &--muted {
+        color: $color-text-muted;
+    }
+
+    &--light {
+        color: $color-text-light;
+    }
+
+    &--center {
+        text-align: center;
+    }
+
+    &--uppercase {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+}
+
+.grid {
+    display: grid;
+    gap: $spacing-lg;
+
+    &--2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    &--responsive {
+        grid-template-columns: 1fr;
+
+        @include responsive($breakpoint-sm) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include responsive($breakpoint-lg) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-modal;
+    @include flex-center;
+}
+
+.modal {
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: $border-radius-sm;
+
+    &--new {
+        background: $color-accent;
+        color: $color-white;
+    }
+
+    &--sale {
+        background: $color-error;
+        color: $color-white;
+    }
+
+    &--soldout {
+        background: $color-text-muted;
+        color: $color-white;
+    }
+}
+
+.divider {
+    height: 1px;
+    background: $color-border;
+    margin: $spacing-lg 0;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, $color-border 25%, $color-background-alt 50%, $color-border 75%);
+    background-size: 200% 100%;
+    animation: pulse 1.5s ease-in-out infinite;
+    border-radius: $border-radius-md;
+}

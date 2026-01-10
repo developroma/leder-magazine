@@ -1,0 +1,72 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.form {
+    padding: $spacing-lg;
+    background: $color-background-alt;
+    border-radius: $border-radius-lg;
+    margin-bottom: $spacing-xl;
+
+    h4 {
+        margin: 0 0 $spacing-lg;
+        font-size: $font-size-lg;
+    }
+}
+
+.ratingField {
+    margin-bottom: $spacing-md;
+
+    label {
+        display: block;
+        margin-bottom: $spacing-sm;
+        font-weight: 500;
+    }
+}
+
+.commentField {
+    margin-bottom: $spacing-lg;
+
+    label {
+        display: block;
+        margin-bottom: $spacing-sm;
+        font-weight: 500;
+    }
+
+    textarea {
+        width: 100%;
+        padding: $spacing-md;
+        border: 1px solid $color-border;
+        border-radius: $border-radius-md;
+        font-family: inherit;
+        font-size: $font-size-base;
+        resize: vertical;
+        transition: border-color $transition-fast;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+    }
+}
+
+.submitBtn {
+    @include button-primary;
+    padding: $spacing-sm $spacing-xl;
+}
+
+// Dark theme
+:global([data-theme="dark"]) {
+    .form {
+        background: #2A2A2A;
+    }
+
+    .commentField textarea {
+        background: #1E1E1E;
+        border-color: #404040;
+        color: #E0E0E0;
+
+        &::placeholder {
+            color: #808080;
+        }
+    }
+}

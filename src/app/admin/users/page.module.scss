@@ -1,0 +1,322 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.users {
+    padding: $spacing-lg;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+
+    h1 {
+        font-size: $font-size-2xl;
+    }
+}
+
+.stats {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+
+    strong {
+        color: $color-primary;
+    }
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    flex: 1;
+    min-width: 250px;
+
+    input {
+        flex: 1;
+        border: none;
+        font-size: $font-size-base;
+        background: transparent;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    svg {
+        color: $color-text-muted;
+    }
+}
+
+.roleFilter {
+    display: flex;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+
+    button {
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+        background: $color-white;
+        border: none;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:not(:last-child) {
+            border-right: 1px solid $color-border;
+        }
+
+        &:hover {
+            background: $color-background-alt;
+        }
+
+        &.active {
+            background: $color-primary;
+            color: $color-white;
+        }
+    }
+}
+
+.table {
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+}
+
+.tableHeader {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1.5fr 100px;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: $color-background-alt;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.tableRow {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1.5fr 100px;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    align-items: center;
+    border-bottom: 1px solid $color-border;
+    transition: background $transition-fast;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: rgba($color-primary, 0.02);
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: $spacing-xs;
+    }
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+}
+
+.avatar {
+    @include flex-center;
+    width: 36px;
+    height: 36px;
+    background: $color-background-alt;
+    border-radius: $border-radius-full;
+    color: $color-text-muted;
+}
+
+.email {
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+}
+
+.role {
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    border-radius: $border-radius-full;
+    width: fit-content;
+
+    &.admin {
+        background: linear-gradient(135deg, rgba($color-primary, 0.1) 0%, rgba($color-primary, 0.2) 100%);
+        color: $color-primary;
+    }
+
+    &.customer {
+        background: $color-background-alt;
+        color: $color-text-muted;
+    }
+}
+
+.date {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.actions {
+    display: flex;
+    gap: $spacing-xs;
+
+    button {
+        @include flex-center;
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        transition: all $transition-fast;
+    }
+}
+
+.makeAdmin {
+    background: rgba($color-success, 0.1);
+    color: $color-success;
+
+    &:hover {
+        background: $color-success;
+        color: $color-white;
+    }
+}
+
+.removeAdmin {
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+
+    &:hover {
+        background: $color-error;
+        color: $color-white;
+    }
+}
+
+.empty {
+    padding: $spacing-3xl;
+    text-align: center;
+    color: $color-text-muted;
+}
+
+.loading {
+    @include flex-center;
+    min-height: 200px;
+    color: $color-text-muted;
+}
+
+// Dark Theme Overrides
+:global([data-theme="dark"]) {
+    .header h1 {
+        color: #E0E0E0;
+    }
+
+    .stats {
+        color: #B0B0B0;
+    }
+
+    .searchBox {
+        background: #2A2A2A;
+        border-color: #404040;
+
+        input {
+            color: #E0E0E0;
+
+            &::placeholder {
+                color: #808080;
+            }
+        }
+
+        svg {
+            color: #808080;
+        }
+    }
+
+    .roleFilter {
+        border-color: #404040;
+
+        button {
+            background: #2A2A2A;
+            color: #E0E0E0;
+            border-color: #404040;
+
+            &:hover {
+                background: #3A3A3A;
+            }
+
+            &.active {
+                background: $color-primary;
+                color: $color-white;
+            }
+        }
+    }
+
+    .table {
+        background: #1E1E1E;
+        border-color: #333;
+    }
+
+    .tableHeader {
+        background: #2A2A2A;
+        color: #B0B0B0;
+    }
+
+    .tableRow {
+        border-color: #333;
+
+        &:hover {
+            background: #2A2A2A;
+        }
+    }
+
+    .userInfo {
+        color: #E0E0E0;
+    }
+
+    .avatar {
+        background: #2A2A2A;
+        color: #808080;
+    }
+
+    .email {
+        color: #B0B0B0;
+    }
+
+    .date {
+        color: #808080;
+    }
+
+    .role.customer {
+        background: #2A2A2A;
+        color: #B0B0B0;
+    }
+
+    .empty,
+    .loading {
+        color: #808080;
+    }
+}

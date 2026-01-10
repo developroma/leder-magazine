@@ -1,0 +1,170 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.contact {
+    padding: $spacing-2xl 0;
+    min-height: 80vh;
+}
+
+.container {
+    @include container;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+
+    h1 {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-sm;
+    }
+
+    p {
+        color: $color-text-muted;
+        font-size: $font-size-lg;
+    }
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: $spacing-2xl;
+    max-width: 900px;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info {
+    h2 {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-lg;
+    }
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+
+    svg {
+        color: $color-primary;
+        margin-top: 2px;
+    }
+
+    strong {
+        display: block;
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-xs;
+    }
+
+    span {
+        color: $color-text-muted;
+        font-size: $font-size-sm;
+    }
+}
+
+.note {
+    margin-top: $spacing-lg;
+    padding: $spacing-md;
+    background: $color-background-alt;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+}
+
+.form {
+    background: $color-white;
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+}
+
+.field {
+    margin-bottom: $spacing-lg;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        font-weight: 500;
+        margin-bottom: $spacing-xs;
+        font-size: $font-size-sm;
+
+        svg {
+            color: $color-text-muted;
+        }
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: $spacing-md;
+        border: 1px solid $color-border;
+        border-radius: $border-radius-md;
+        font-size: $font-size-base;
+        font-family: inherit;
+        transition: all $transition-fast;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+            box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+        }
+
+        &::placeholder {
+            color: $color-text-muted;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+}
+
+.submitBtn {
+    @include button-primary;
+    width: 100%;
+    padding: $spacing-md $spacing-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    font-size: $font-size-base;
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+// Dark theme
+:global([data-theme="dark"]) {
+    .note {
+        background: #2A2A2A;
+    }
+
+    .form {
+        background: #1E1E1E;
+        box-shadow: none;
+        border: 1px solid #333;
+    }
+
+    .field {
+
+        input,
+        textarea {
+            background: #2A2A2A;
+            border-color: #404040;
+            color: #E0E0E0;
+
+            &:focus {
+                border-color: $color-primary;
+            }
+        }
+    }
+}

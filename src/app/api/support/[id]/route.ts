@@ -4,6 +4,8 @@ import dbConnect from '@/lib/db/mongoose';
 import SupportTicketModel from '@/models/SupportTicket';
 import UserModel from '@/models/User';
 
+export const dynamic = 'force-dynamic';
+
 // Update ticket status (admin only)
 export async function PUT(
     request: NextRequest,

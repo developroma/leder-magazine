@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import dbConnect from '@/lib/db/mongoose';
+
+export const dynamic = 'force-dynamic';
 import ReviewModel from '@/models/Review';
 import UserModel from '@/models/User';
 import ProductModel from '@/models/Product';

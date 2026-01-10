@@ -4,6 +4,8 @@ import dbConnect from '@/lib/db/mongoose';
 import SupportTicketModel from '@/models/SupportTicket';
 import UserModel from '@/models/User';
 
+export const dynamic = 'force-dynamic';
+
 // Get all tickets (admin only)
 export async function GET(request: NextRequest) {
     try {

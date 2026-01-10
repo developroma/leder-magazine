@@ -5,6 +5,8 @@ import SupportTicketModel from '@/models/SupportTicket';
 import UserModel from '@/models/User';
 import { sendSupportReply } from '@/lib/email';
 
+export const dynamic = 'force-dynamic';
+
 // Admin reply to ticket
 export async function POST(
     request: NextRequest,

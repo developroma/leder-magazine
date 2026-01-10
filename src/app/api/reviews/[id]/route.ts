@@ -4,6 +4,8 @@ import dbConnect from '@/lib/db/mongoose';
 import ReviewModel from '@/models/Review';
 import UserModel from '@/models/User';
 
+export const dynamic = 'force-dynamic';
+
 // Get single review
 export async function GET(
     request: NextRequest,

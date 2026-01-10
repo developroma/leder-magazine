@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import dbConnect from '@/lib/db/mongoose';
 import UserModel from '@/models/User';
 
+export const dynamic = 'force-dynamic';
+
 // Get current user data by email from cookie/session
 export async function GET(request: NextRequest) {
     try {

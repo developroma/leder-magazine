@@ -4,6 +4,7 @@ import OrderModel from '@/models/Order';
 import ProductModel from '@/models/Product';
 import { generateOrderNumber } from '@/lib/utils';
 
+export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
     try {
         await dbConnect();

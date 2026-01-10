@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db/mongoose';
 import ProductModel from '@/models/Product';
 
+export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
     try {
         await dbConnect();

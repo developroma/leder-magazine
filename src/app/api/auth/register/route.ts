@@ -12,12 +12,16 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Користувач вже існує' }, { status: 400 });
         }
 
+        // Check if this email should be admin
+        const adminEmail = process.env.ADMIN_EMAIL;
+        const isAdmin = adminEmail && email.toLowerCase() === adminEmail.toLowerCase();
+
         const user = await UserModel.create({
             email,
             password,
             firstName,
             lastName,
-            role: 'customer',
+            role: isAdmin ? 'admin' : 'customer',
         });
 
         const userWithoutPassword = {

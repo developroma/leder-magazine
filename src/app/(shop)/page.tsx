@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiArrowRight, FiTruck, FiShield, FiHeart, FiAward, FiStar } from 'react-icons/fi';
@@ -14,15 +14,24 @@ const FEATURED_CATEGORIES = [
     { key: 'accessories', slug: 'accessories', image: 'https://images.unsplash.com/photo-1611923134239-b9be5816e23c?w=600' },
 ];
 
-const REVIEWS_DATA = [
-    { nameKey: 'review1Name', textKey: 'review1Text', rating: 5 },
-    { nameKey: 'review2Name', textKey: 'review2Text', rating: 5 },
-    { nameKey: 'review3Name', textKey: 'review3Text', rating: 5 },
+// Default reviews fallback when no real reviews exist
+const DEFAULT_REVIEWS = [
+    { rating: 5, comment: 'Чудова сумка! Якість неймовірна, шкіра м\'яка та приємна. Рекомендую!', userName: 'Олена К.' },
+    { rating: 5, comment: 'Замовляв гаманець, дуже задоволений. Швидка доставка, гарна упаковка.', userName: 'Михайло Т.' },
+    { rating: 5, comment: 'Ремінь для чоловіка — ідеальний подарунок! Якість на висоті.', userName: 'Ірина В.' },
 ];
+
+interface FeaturedReview {
+    _id?: string;
+    rating: number;
+    comment: string;
+    userName: string;
+}
 
 export default function HomePage() {
     const t = useTranslations();
     const sectionsRef = useRef<HTMLElement[]>([]);
+    const [featuredReviews, setFeaturedReviews] = useState<FeaturedReview[]>(DEFAULT_REVIEWS);
 
     const BENEFITS = [
         { icon: FiTruck, title: t.home.freeDelivery, desc: t.home.freeDeliveryDesc },
@@ -55,6 +64,23 @@ export default function HomePage() {
         });
 
         return () => observer.disconnect();
+    }, []);
+
+    // Fetch featured reviews from API
+    useEffect(() => {
+        const fetchFeaturedReviews = async () => {
+            try {
+                const res = await fetch('/api/reviews/featured?limit=3');
+                const data = await res.json();
+                if (data && data.length >= 3) {
+                    setFeaturedReviews(data);
+                }
+            } catch (error) {
+                // Keep default reviews on error
+                console.error('Failed to fetch featured reviews:', error);
+            }
+        };
+        fetchFeaturedReviews();
     }, []);
 
     const addToRefs = (el: HTMLElement | null) => {
@@ -189,33 +215,17 @@ export default function HomePage() {
                 <div className={styles.container}>
                     <h2 className={styles.sectionTitle}>{t.home.reviews}</h2>
                     <div className={styles.reviewsGrid}>
-                        <div className={styles.reviewCard} style={{ animationDelay: '0s' }}>
-                            <div className={styles.stars}>
-                                {[...Array(5)].map((_, j) => (
-                                    <FiStar key={j} fill="currentColor" />
-                                ))}
+                        {featuredReviews.map((review, i) => (
+                            <div key={review._id || i} className={styles.reviewCard} style={{ animationDelay: `${i * 0.15}s` }}>
+                                <div className={styles.stars}>
+                                    {[...Array(Math.floor(review.rating))].map((_, j) => (
+                                        <FiStar key={j} fill="currentColor" />
+                                    ))}
+                                </div>
+                                <p>"{review.comment}"</p>
+                                <span className={styles.reviewer}>{review.userName}</span>
                             </div>
-                            <p>"Чудова сумка! Якість неймовірна, шкіра м'яка та приємна. Рекомендую!"</p>
-                            <span className={styles.reviewer}>Олена К.</span>
-                        </div>
-                        <div className={styles.reviewCard} style={{ animationDelay: '0.15s' }}>
-                            <div className={styles.stars}>
-                                {[...Array(5)].map((_, j) => (
-                                    <FiStar key={j} fill="currentColor" />
-                                ))}
-                            </div>
-                            <p>"Замовляв гаманець, дуже задоволений. Швидка доставка, гарна упаковка."</p>
-                            <span className={styles.reviewer}>Михайло Т.</span>
-                        </div>
-                        <div className={styles.reviewCard} style={{ animationDelay: '0.3s' }}>
-                            <div className={styles.stars}>
-                                {[...Array(5)].map((_, j) => (
-                                    <FiStar key={j} fill="currentColor" />
-                                ))}
-                            </div>
-                            <p>"Ремінь для чоловіка — ідеальний подарунок! Якість на висоті."</p>
-                            <span className={styles.reviewer}>Ірина В.</span>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>

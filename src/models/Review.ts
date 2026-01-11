@@ -12,6 +12,11 @@ const ReviewSchema = new Schema(
             enum: ['new', 'read', 'replied'],
             default: 'new'
         },
+        moderation: {
+            type: String,
+            enum: ['pending', 'approved', 'rejected'],
+            default: 'pending'
+        },
         parentId: { type: Schema.Types.ObjectId, ref: 'Review', default: null },
     },
     { timestamps: true }

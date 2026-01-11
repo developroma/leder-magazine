@@ -41,9 +41,15 @@ export async function GET(request: NextRequest) {
         }
 
         if (q) {
+            // Smart search across multiple fields including multilingual titles
+            const searchRegex = { $regex: q, $options: 'i' };
             query.$or = [
-                { title: { $regex: q, $options: 'i' } },
-                { description: { $regex: q, $options: 'i' } },
+                { title: searchRegex },
+                { titleEn: searchRegex },
+                { titlePl: searchRegex },
+                { description: searchRegex },
+                { category: searchRegex },
+                { 'variants.color': searchRegex },
             ];
         }
 

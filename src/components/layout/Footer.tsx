@@ -42,7 +42,7 @@ export default function Footer() {
                             <Link href="/info/about">{t.footer.about}</Link>
                             <Link href="/info/delivery">{t.footer.delivery}</Link>
                             <Link href="/info/returns">{t.footer.returns}</Link>
-                            <Link href="/contact">Підтримка</Link>
+                            <Link href="/contact">{t.footer.support}</Link>
                         </nav>
                     </div>
 

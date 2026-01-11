@@ -26,6 +26,42 @@ const ProductSchema = new mongoose.Schema({
 
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 
+const CategorySchema = new mongoose.Schema({
+    name: String,
+    slug: { type: String, unique: true },
+    description: String,
+    image: String,
+}, { timestamps: true });
+
+const Category = mongoose.models.Category || mongoose.model('Category', CategorySchema);
+
+const seedCategories = [
+    {
+        name: 'Сумки',
+        slug: 'bags',
+        description: 'Шкіряні сумки ручної роботи',
+        image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600',
+    },
+    {
+        name: 'Гаманці',
+        slug: 'wallets',
+        description: 'Компактні гаманці з натуральної шкіри',
+        image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=600',
+    },
+    {
+        name: 'Ремені',
+        slug: 'belts',
+        description: 'Класичні шкіряні ремені',
+        image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600',
+    },
+    {
+        name: 'Аксесуари',
+        slug: 'accessories',
+        description: 'Шкіряні аксесуари та подарунки',
+        image: 'https://images.unsplash.com/photo-1611923134239-b9be5816e23c?w=600',
+    },
+];
+
 const seedProducts = [
     {
         title: 'Шкіряна сумка "Classic"',
@@ -256,9 +292,13 @@ async function seed() {
         await mongoose.connect(MONGODB_URI);
         console.log('Connected to MongoDB');
 
-        await Product.deleteMany({});
-        console.log('Cleared existing products');
+        // Seed categories
+        await Category.deleteMany({});
+        await Category.insertMany(seedCategories);
+        console.log(`Inserted ${seedCategories.length} categories`);
 
+        // Seed products
+        await Product.deleteMany({});
         await Product.insertMany(seedProducts);
         console.log(`Inserted ${seedProducts.length} products with EN/PL translations`);
 

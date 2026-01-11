@@ -94,6 +94,13 @@ export default function AdminProducts() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Validate at least one image exists
+        const hasImage = form.variants.some(v => v.images.some(img => img.trim() !== ''));
+        if (!hasImage) {
+            toast.error(t.admin.imageRequired || 'Додайте хоча б одне зображення');
+            return;
+        }
+
         const productData = {
             title: form.title,
             slug: generateSlug(form.title),
@@ -303,20 +310,23 @@ export default function AdminProducts() {
                         <h2>{editingProduct ? t.admin.editProduct : t.admin.addProduct}</h2>
                         <form onSubmit={handleSubmit}>
                             <div className={styles.formRow}>
-                                <label>{t.admin.productName} *</label>
+                                <label>{t.admin.productName} * <span className={styles.charCount}>{form.title.length}/70</span></label>
                                 <input
                                     type="text"
                                     value={form.title}
                                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                                    maxLength={70}
                                     required
                                 />
                             </div>
                             <div className={styles.formRow}>
-                                <label>{t.admin.description}</label>
+                                <label>{t.admin.description} <span className={styles.charCount}>{form.description.length}/1000</span></label>
                                 <textarea
                                     value={form.description}
                                     onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                                     rows={4}
+                                    maxLength={1000}
+                                    style={{ resize: 'vertical', maxHeight: '300px' }}
                                 />
                             </div>
                             <div className={styles.formGrid}>

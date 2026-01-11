@@ -1,16 +1,32 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FiPackage, FiShoppingCart, FiDollarSign, FiAlertTriangle, FiMail } from 'react-icons/fi';
+import Link from 'next/link';
+import { FiPackage, FiShoppingCart, FiDollarSign, FiAlertTriangle, FiMail, FiImage } from 'react-icons/fi';
 import { formatPrice } from '@/lib/utils';
 import { useTranslations } from '@/lib/store/language';
-import type { Order, Product } from '@/types';
+import type { Order } from '@/types';
 import styles from './page.module.scss';
 
+interface DashboardStats {
+    totalOrders: number;
+    newOrders: number;
+    revenue: number;
+    lowStock: number;
+    openSupport: number;
+    totalProducts: number;
+}
+
 export default function AdminDashboard() {
-    const [orders, setOrders] = useState<Order[]>([]);
-    const [products, setProducts] = useState<Product[]>([]);
-    const [supportCount, setSupportCount] = useState(0);
+    const [stats, setStats] = useState<DashboardStats>({
+        totalOrders: 0,
+        newOrders: 0,
+        revenue: 0,
+        lowStock: 0,
+        openSupport: 0,
+        totalProducts: 0,
+    });
+    const [recentOrders, setRecentOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
     const t = useTranslations();
 
@@ -23,33 +39,16 @@ export default function AdminDashboard() {
     };
 
     useEffect(() => {
-        Promise.all([
-            fetch('/api/orders').then((r) => r.json()),
-            fetch('/api/products').then((r) => r.json()),
-            fetch('/api/support').then((r) => r.json()).catch(() => []),
-        ])
-            .then(([ordersData, productsData, supportData]) => {
-                setOrders(ordersData.orders || []);
-                setProducts(productsData.products || []);
-                const tickets = Array.isArray(supportData) ? supportData : [];
-                setSupportCount(tickets.filter((t: any) => t.status === 'open').length);
+        // Single optimized request instead of multiple
+        fetch('/api/admin/stats')
+            .then((r) => r.json())
+            .then((data) => {
+                setStats(data.stats || {});
+                setRecentOrders(data.recentOrders || []);
             })
             .catch(console.error)
             .finally(() => setLoading(false));
     }, []);
-
-    const stats = {
-        totalOrders: orders.length,
-        newOrders: orders.filter((o) => o.status === 'new').length,
-        revenue: orders
-            .filter((o) => o.status !== 'cancelled')
-            .reduce((sum, o) => sum + o.totalPrice, 0),
-        lowStock: products.filter((p) =>
-            p.variants.some((v) => v.stock > 0 && v.stock <= 3)
-        ).length,
-    };
-
-    const recentOrders = orders.slice(0, 5);
 
     if (loading) {
         return <div className={styles.loading}>{t.common.loading}</div>;
@@ -88,10 +87,10 @@ export default function AdminDashboard() {
                         <span className={styles.statLabel}>{t.admin.lowStock}</span>
                     </div>
                 </div>
-                <div className={`${styles.statCard} ${supportCount > 0 ? styles.highlight : ''}`}>
+                <div className={`${styles.statCard} ${stats.openSupport > 0 ? styles.highlight : ''}`}>
                     <FiMail size={24} />
                     <div>
-                        <span className={styles.statValue}>{supportCount}</span>
+                        <span className={styles.statValue}>{stats.openSupport}</span>
                         <span className={styles.statLabel}>Нових запитів</span>
                     </div>
                 </div>
@@ -100,35 +99,42 @@ export default function AdminDashboard() {
             <div className={styles.section}>
                 <h2>{t.admin.recentOrders}</h2>
                 {recentOrders.length === 0 ? (
-                    <p className={styles.empty}>{t.admin.noData}</p>
+                    <p className={styles.empty}>Немає замовлень</p>
                 ) : (
-                    <table className={styles.table}>
-                        <thead>
-                            <tr>
-                                <th>{t.admin.orderNumber}</th>
-                                <th>{t.admin.client}</th>
-                                <th>{t.admin.amount}</th>
-                                <th>{t.admin.status}</th>
-                                <th>{t.admin.date}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {recentOrders.map((order) => (
-                                <tr key={order._id}>
-                                    <td>{order.orderNumber}</td>
-                                    <td>{order.customer.firstName} {order.customer.lastName}</td>
-                                    <td>{formatPrice(order.totalPrice)}</td>
-                                    <td>
-                                        <span className={`${styles.status} ${styles[order.status]}`}>
-                                            {STATUS_LABELS[order.status]}
-                                        </span>
-                                    </td>
-                                    <td>{new Date(order.createdAt).toLocaleDateString('uk-UA')}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className={styles.table}>
+                        <div className={styles.tableHeader}>
+                            <span>Замовлення</span>
+                            <span>Клієнт</span>
+                            <span>{t.admin.status}</span>
+                            <span>Сума</span>
+                        </div>
+                        {recentOrders.map((order) => (
+                            <Link
+                                key={order._id}
+                                href={`/admin/orders?id=${order._id}`}
+                                className={styles.tableRow}
+                            >
+                                <span>#{order._id.slice(-6)}</span>
+                                <span>{order.customer?.lastName} {order.customer?.firstName}</span>
+                                <span className={`${styles.status} ${styles[order.status]}`}>
+                                    {STATUS_LABELS[order.status] || order.status}
+                                </span>
+                                <span>{formatPrice(order.totalPrice)}</span>
+                            </Link>
+                        ))}
+                    </div>
                 )}
+            </div>
+
+            <div className={styles.section}>
+                <h2>Налаштування сайту</h2>
+                <div className={styles.settingsGrid}>
+                    <Link href="/admin/settings/hero" className={styles.settingCard}>
+                        <FiImage size={32} />
+                        <span>Hero зображення</span>
+                        <p>Змінити фото на головній сторінці</p>
+                    </Link>
+                </div>
             </div>
         </div>
     );

@@ -1,0 +1,138 @@
+@import '@/styles/variables';
+
+.upload {
+    border: 2px dashed $color-border;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    text-align: center;
+    transition: all $transition-fast;
+
+    &:hover {
+        border-color: $color-primary;
+    }
+}
+
+.fileInput {
+    display: none;
+}
+
+.buttons {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.uploadBtn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: $color-primary;
+    color: $color-white;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: darken($color-primary, 10%);
+    }
+}
+
+.urlBtn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    background: $color-background-alt;
+    color: $color-text;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+        border-color: $color-primary;
+    }
+}
+
+.urlInput {
+    display: flex;
+    gap: $spacing-xs;
+
+    input {
+        flex: 1;
+        padding: $spacing-sm;
+        border: 1px solid $color-border;
+        border-radius: $border-radius-md;
+        font-size: $font-size-sm;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+    }
+
+    button {
+        padding: $spacing-sm $spacing-md;
+        background: $color-primary;
+        color: $color-white;
+        border: none;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+
+        &:last-child {
+            background: $color-background-alt;
+            color: $color-text;
+            border: 1px solid $color-border;
+        }
+    }
+}
+
+.preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    background: $color-background-alt;
+}
+
+.removeBtn {
+    position: absolute;
+    top: $spacing-sm;
+    right: $spacing-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.7);
+    color: $color-white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: $color-error;
+    }
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba($color-white, 0.3);
+    border-top-color: $color-white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

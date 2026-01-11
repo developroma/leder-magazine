@@ -10,6 +10,7 @@ import { useAuthStore } from '@/lib/store/auth';
 import { useTranslations } from '@/lib/store/language';
 import { formatPrice, debounce } from '@/lib/utils';
 import type { NovaPoshtaCity, NovaPoshtaWarehouse } from '@/types';
+import PhoneInput from '@/components/ui/PhoneInput';
 import styles from './page.module.scss';
 
 export default function CheckoutPage() {
@@ -331,14 +332,12 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className={styles.field}>
                                     <label>{t.checkout.phone} *</label>
-                                    <input
-                                        type="tel"
-                                        placeholder="+380"
+                                    <PhoneInput
                                         value={form.phone}
-                                        onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-                                        className={errors.phone ? styles.error : ''}
+                                        onChange={(value) => setForm((f) => ({ ...f, phone: value }))}
+                                        required
+                                        error={errors.phone}
                                     />
-                                    {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
                                 </div>
                             </div>
                         </section>

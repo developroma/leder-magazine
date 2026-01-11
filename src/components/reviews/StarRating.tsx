@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { FiStar } from 'react-icons/fi';
 import styles from './StarRating.module.scss';
 
@@ -11,6 +11,7 @@ interface StarRatingProps {
     interactive?: boolean;
     onChange?: (rating: number) => void;
     showValue?: boolean;
+    allowHalf?: boolean;
 }
 
 export default function StarRating({
@@ -20,18 +21,34 @@ export default function StarRating({
     interactive = false,
     onChange,
     showValue = false,
+    allowHalf = true,
 }: StarRatingProps) {
     const [hoverRating, setHoverRating] = useState(0);
 
-    const handleClick = (value: number) => {
-        if (interactive && onChange) {
+    const handleClick = (e: React.MouseEvent, starIndex: number) => {
+        if (!interactive || !onChange) return;
+
+        if (allowHalf) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const isHalf = x < rect.width / 2;
+            const value = starIndex + (isHalf ? 0.5 : 1);
             onChange(value);
+        } else {
+            onChange(starIndex + 1);
         }
     };
 
-    const handleMouseEnter = (value: number) => {
-        if (interactive) {
-            setHoverRating(value);
+    const handleMouseMove = (e: React.MouseEvent, starIndex: number) => {
+        if (!interactive) return;
+
+        if (allowHalf) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const isHalf = x < rect.width / 2;
+            setHoverRating(starIndex + (isHalf ? 0.5 : 1));
+        } else {
+            setHoverRating(starIndex + 1);
         }
     };
 
@@ -47,17 +64,16 @@ export default function StarRating({
         <div className={styles.starRating}>
             <div className={styles.stars}>
                 {Array.from({ length: maxRating }, (_, i) => {
-                    const value = i + 1;
-                    const isFilled = value <= displayRating;
-                    const isHalf = !isFilled && value - 0.5 <= displayRating;
+                    const isFilled = i + 1 <= displayRating;
+                    const isHalf = !isFilled && i + 0.5 <= displayRating;
 
                     return (
                         <button
                             key={i}
                             type="button"
                             className={`${styles.star} ${isFilled ? styles.filled : ''} ${isHalf ? styles.half : ''} ${interactive ? styles.interactive : ''}`}
-                            onClick={() => handleClick(value)}
-                            onMouseEnter={() => handleMouseEnter(value)}
+                            onClick={(e) => handleClick(e, i)}
+                            onMouseMove={(e) => handleMouseMove(e, i)}
                             onMouseLeave={handleMouseLeave}
                             disabled={!interactive}
                         >

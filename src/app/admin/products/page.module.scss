@@ -264,7 +264,9 @@
     margin-bottom: $spacing-md;
 
     label {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         font-size: $font-size-sm;
         font-weight: 500;
         margin-bottom: $spacing-xs;
@@ -275,6 +277,12 @@
     textarea {
         @include input-base;
     }
+}
+
+.charCount {
+    font-weight: 400;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
 }
 
 .formGrid {

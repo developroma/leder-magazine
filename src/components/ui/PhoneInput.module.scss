@@ -1,0 +1,89 @@
+@import '@/styles/variables';
+
+.phoneInput {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    transition: all $transition-fast;
+
+    &:focus-within {
+        border-color: $color-primary;
+    }
+
+    &.hasError {
+        border-color: $color-error;
+    }
+}
+
+.prefix {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    background: $color-background-alt;
+    border-right: 1px solid $color-border;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.flag {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.code {
+    font-size: $font-size-sm;
+    color: $color-text;
+}
+
+.input {
+    flex: 1;
+    min-width: 0;
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    font-size: $font-size-base;
+    font-family: inherit;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: $color-text-muted;
+    }
+}
+
+.error {
+    width: 100%;
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    color: $color-error;
+    background: rgba($color-error, 0.1);
+}
+
+// Dark theme
+:global([data-theme="dark"]) {
+    .phoneInput {
+        border-color: #404040;
+    }
+
+    .prefix {
+        background: #2A2A2A;
+        border-color: #404040;
+    }
+
+    .code {
+        color: #E0E0E0;
+    }
+
+    .input {
+        background: #1E1E1E;
+        color: #E0E0E0;
+
+        &::placeholder {
+            color: #808080;
+        }
+    }
+}

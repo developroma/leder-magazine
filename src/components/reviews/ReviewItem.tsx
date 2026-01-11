@@ -22,9 +22,13 @@ export default function ReviewItem({ review, onRefresh, isReply = false }: Revie
     const [replyText, setReplyText] = useState('');
     const [loading, setLoading] = useState(false);
 
+    // Optimistic UI state for likes
+    const [optimisticLikes, setOptimisticLikes] = useState<string[] | null>(null);
+    const currentLikes = optimisticLikes ?? review.likes ?? [];
+
     const isOwner = user?._id === review.userId;
     const isAdmin = user?.role === 'admin';
-    const hasLiked = review.likes?.includes(user?._id || '');
+    const hasLiked = currentLikes.includes(user?._id || '');
 
     const formatDate = (date: Date) => {
         return new Date(date).toLocaleDateString('uk-UA', {
@@ -40,10 +44,19 @@ export default function ReviewItem({ review, onRefresh, isReply = false }: Revie
             return;
         }
 
+        // Optimistic update - instant UI response
+        const newLikes = hasLiked
+            ? currentLikes.filter(id => id !== user._id)
+            : [...currentLikes, user._id];
+        setOptimisticLikes(newLikes);
+
         try {
             await fetch(`/api/reviews/${review._id}/like`, { method: 'POST' });
-            onRefresh();
+            // Background refresh without blocking UI
+            setTimeout(() => onRefresh(), 500);
         } catch (error) {
+            // Revert on error
+            setOptimisticLikes(null);
             toast.error('Помилка');
         }
     };
@@ -112,7 +125,7 @@ export default function ReviewItem({ review, onRefresh, isReply = false }: Revie
                     onClick={handleLike}
                 >
                     <FiHeart size={16} />
-                    <span>{review.likes?.length || 0}</span>
+                    <span>{currentLikes.length}</span>
                 </button>
 
                 {user && !isReply && (

@@ -88,7 +88,7 @@ export default function Header() {
                                 onClick={() => setLangMenuOpen(!langMenuOpen)}
                                 aria-label="Change language"
                             >
-                                <span>{language.toUpperCase()}</span>
+                                <span>{language === 'uk' ? 'UA' : language.toUpperCase()}</span>
                             </button>
                             {langMenuOpen && (
                                 <>

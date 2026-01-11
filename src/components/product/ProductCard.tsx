@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiShoppingBag, FiStar } from 'react-icons/fi';
@@ -12,27 +12,19 @@ import styles from './ProductCard.module.scss';
 
 interface ProductCardProps {
     product: Product;
+    rating?: { avg: number; count: number };
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, rating }: ProductCardProps) {
     const { addItem, openCart } = useCartStore();
     const translateName = useProductTranslation();
     const defaultVariant = product.variants[0];
     const isOutOfStock = product.variants.every((v) => v.stock === 0);
     const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price;
-    const [rating, setRating] = useState({ avg: 0, count: 0 });
 
-    useEffect(() => {
-        // Fetch rating for this product
-        fetch(`/api/reviews?productId=${product._id}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.averageRating !== undefined) {
-                    setRating({ avg: data.averageRating, count: data.totalReviews || 0 });
-                }
-            })
-            .catch(() => { });
-    }, [product._id]);
+    // Check if product is new (created within last 7 days)
+    const isNew = product.createdAt &&
+        (new Date().getTime() - new Date(product.createdAt).getTime()) < 7 * 24 * 60 * 60 * 1000;
 
     const handleQuickAdd = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -65,8 +57,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                 )}
 
                 <div className={styles.labels}>
-                    {product.labels.includes('new') && <span className={styles.labelNew}>New</span>}
-                    {product.labels.includes('sale') && <span className={styles.labelSale}>Sale</span>}
+                    {isNew && <span className={styles.labelNew}>New</span>}
+                    {hasDiscount && <span className={styles.labelSale}>Sale</span>}
                     {isOutOfStock && <span className={styles.labelSoldOut}>Sold Out</span>}
                 </div>
 
@@ -79,7 +71,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
             <div className={styles.info}>
                 <h3 className={styles.title}>{translateName(product)}</h3>
-                {rating.avg > 0 && (
+                {rating && rating.avg > 0 && (
                     <div className={styles.rating}>
                         <FiStar size={14} fill="#FFB800" color="#FFB800" />
                         <span>{rating.avg.toFixed(1)}</span>
